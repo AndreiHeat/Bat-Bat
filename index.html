@@ -15,13 +15,9 @@
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
         }
-        .tap-button {
-            background-color: #6200ea;
-            color: white;
-            font-size: 24px;
-            padding: 20px 40px;
-            border: none;
-            border-radius: 10px;
+        .tap-image {
+            width: 150px;
+            height: auto;
             cursor: pointer;
         }
         .tap-count {
@@ -42,7 +38,8 @@
 </head>
 <body>
     <h1>Tap Game</h1>
-    <button class="tap-button" id="tapBtn">Тапни меня!</button>
+    <!-- Летучая мышь -->
+    <img src="images/bat.png" alt="Tap Me" class="tap-image" id="tapImg">
     <div class="tap-count">Счёт: <span id="tapCount">0</span></div>
     <button class="finish-button" id="finishBtn">Завершить игру</button>
 
@@ -50,12 +47,12 @@
         let tapCount = 0;
 
         // Получаем элементы
-        const tapButton = document.getElementById('tapBtn');
+        const tapImage = document.getElementById('tapImg');
         const tapCountDisplay = document.getElementById('tapCount');
         const finishButton = document.getElementById('finishBtn');
 
-        // Обрабатываем нажатие на кнопку "Тапни меня"
-        tapButton.addEventListener('click', () => {
+        // Обрабатываем нажатие на изображение летучей мыши
+        tapImage.addEventListener('click', () => {
             tapCount++;
             tapCountDisplay.textContent = tapCount;
         });
@@ -63,11 +60,9 @@
         // Завершение игры
         finishButton.addEventListener('click', () => {
             if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-                // Отправляем данные обратно в Telegram только если приложение запущено в Telegram
                 Telegram.WebApp.sendData(JSON.stringify({ tapCount: tapCount }));
                 console.log("Данные отправлены в Telegram: ", tapCount);
             } else {
-                // В браузере выводим данные в консоль для отладки
                 console.log("Игра завершена! Счёт: ", tapCount);
             }
             
@@ -78,7 +73,7 @@
 
         // Проверяем, запущено ли приложение в Telegram
         if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-            Telegram.WebApp.ready();  // Сообщаем Telegram, что WebApp готово
+            Telegram.WebApp.ready();
         } else {
             console.log("Приложение запущено вне Telegram");
         }
