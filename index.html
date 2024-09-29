@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tap Game</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .tap-button {
+            background-color: #6200ea;
+            color: white;
+            font-size: 24px;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .tap-count {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        .finish-button {
+            margin-top: 20px;
+            background-color: #03a9f4;
+            color: white;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tap Game</h1>
+    <button class="tap-button" id="tapBtn">Тапни меня!</button>
+    <div class="tap-count">Счёт: <span id="tapCount">0</span></div>
+    <button class="finish-button" id="finishBtn">Завершить игру</button>
+
+    <script>
+        let tapCount = 0;
+
+        // Получаем элементы
+        const tapButton = document.getElementById('tapBtn');
+        const tapCountDisplay = document.getElementById('tapCount');
+        const finishButton = document.getElementById('finishBtn');
+
+        // Обрабатываем нажатие на кнопку
+        tapButton.addEventListener('click', () => {
+            tapCount++;
+            tapCountDisplay.textContent = tapCount;
+        });
+
+        // Завершение игры
+        finishButton.addEventListener('click', () => {
+            // Отправляем данные обратно в Telegram
+            Telegram.WebApp.sendData(JSON.stringify({ tapCount: tapCount }));
+        });
+
+        // Инициализация Telegram Web App
+        Telegram.WebApp.ready();
+    </script>
+</body>
+</html>
