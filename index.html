@@ -54,7 +54,7 @@
         const tapCountDisplay = document.getElementById('tapCount');
         const finishButton = document.getElementById('finishBtn');
 
-        // Обрабатываем нажатие на кнопку
+        // Обрабатываем нажатие на кнопку "Тапни меня"
         tapButton.addEventListener('click', () => {
             tapCount++;
             tapCountDisplay.textContent = tapCount;
@@ -70,6 +70,10 @@
                 // В браузере выводим данные в консоль для отладки
                 console.log("Игра завершена! Счёт: ", tapCount);
             }
+            
+            // Обнуляем счетчик после завершения игры
+            tapCount = 0;
+            tapCountDisplay.textContent = tapCount;
         });
 
         // Проверяем, запущено ли приложение в Telegram
@@ -81,4 +85,3 @@
     </script>
 </body>
 </html>
-
