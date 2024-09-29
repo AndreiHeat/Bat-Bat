@@ -62,12 +62,22 @@
 
         // Завершение игры
         finishButton.addEventListener('click', () => {
-            // Отправляем данные обратно в Telegram
-            Telegram.WebApp.sendData(JSON.stringify({ tapCount: tapCount }));
+            if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+                // Отправляем данные обратно в Telegram только если приложение запущено в Telegram
+                Telegram.WebApp.sendData(JSON.stringify({ tapCount: tapCount }));
+                console.log("Данные отправлены в Telegram: ", tapCount);
+            } else {
+                // В браузере выводим данные в консоль для отладки
+                console.log("Игра завершена! Счёт: ", tapCount);
+            }
         });
 
-        // Инициализация Telegram Web App
-        Telegram.WebApp.ready();
+        // Проверяем, запущено ли приложение в Telegram
+        if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+            Telegram.WebApp.ready();  // Сообщаем Telegram, что WebApp готово
+        } else {
+            console.log("Приложение запущено вне Telegram");
+        }
     </script>
 </body>
 </html>
